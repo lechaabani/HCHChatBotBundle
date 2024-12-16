@@ -1,0 +1,6 @@
+{
+    "recipe-repositories": [
+        "flex://defaults",
+        "github.com/lechaabani/hch-recipes"
+    ]
+} 
