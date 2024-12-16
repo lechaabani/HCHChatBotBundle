@@ -1,0 +1,20 @@
+hch_chatbot:
+    interface:
+        enabled: true
+        theme: 'default'
+        position: 'bottom-right'
+        templates:
+            widget: '@HCHChatBot/widget.html.twig'
+            messages: '@HCHChatBot/messages.html.twig'
+    
+    providers:
+        openai:
+            api_key: '%env(OPENAI_API_KEY)%'
+            model: 'gpt-3.5-turbo'
+            limits:
+                daily_requests: 1000
+                tokens_per_request: 4096
+    
+    admin:
+        enabled: true
+        dashboard: true
