@@ -1,0 +1,27 @@
+{% extends '@HCHChatBot/base.html.twig' %}
+
+{% block title %}Dashboard ChatBot{% endblock %}
+
+{% block body %}
+    <div class="dashboard">
+        <div class="stats-container">
+            <div class="stat-card">
+                <h3>Conversations</h3>
+                <div class="stat-value">{{ stats.total_conversations }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Utilisateurs Actifs</h3>
+                <div class="stat-value">{{ stats.active_users }}</div>
+            </div>
+            <div class="stat-card">
+                <h3>Taux de Réussite</h3>
+                <div class="stat-value">{{ stats.success_rate }}%</div>
+            </div>
+        </div>
+
+        <div class="charts-container">
+            {{ render_chart(charts.conversations) }}
+            {{ render_chart(charts.response_times) }}
+        </div>
+    </div>
+{% endblock %} 
