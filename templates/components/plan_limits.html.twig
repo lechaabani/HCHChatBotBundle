@@ -1,0 +1,19 @@
+<div class="plan-limits">
+    <div class="current-usage">
+        <h4>Utilisation aujourd'hui</h4>
+        <p>{{ daily_count }} / {{ plan_limits.messages_per_day }} messages</p>
+        <div class="progress">
+            {% set percentage = (daily_count / plan_limits.messages_per_day) * 100 %}
+            <div class="progress-bar" style="width: {{ percentage }}%"></div>
+        </div>
+    </div>
+
+    {% if daily_count >= plan_limits.messages_per_day %}
+        <div class="upgrade-notice">
+            <p>Vous avez atteint votre limite quotidienne.</p>
+            <a href="{{ path('upgrade_plan') }}" class="btn btn-primary">
+                Passer au plan Premium
+            </a>
+        </div>
+    {% endif %}
+</div> 
