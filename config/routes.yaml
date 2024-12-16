@@ -1,0 +1,2 @@
+hch_chatbot:
+    resource: '@HCHChatBotBundle/Resources/config/routes.yaml'
