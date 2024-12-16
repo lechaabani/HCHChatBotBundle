@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- ... -->
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+            <link rel="stylesheet" href="{{ asset('bundles/hchchatbot/css/widget.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        <!-- ... -->
+        {{ render_chatbot_widget() }}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('bundles/hchchatbot/js/widget.js') }}"></script>
+            <script>
+                HCHChatBot.init({
+                    theme: 'light',
+                    position: 'bottom-right'
+                });
+            </script>
+        {% endblock %}
+    </body>
+</html> 
