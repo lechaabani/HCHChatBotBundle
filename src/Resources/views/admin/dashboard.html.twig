@@ -1,0 +1,32 @@
+{% extends '@HCHChatBot/admin/base.html.twig' %}
+
+{% block content %}
+<div class="dashboard">
+    <div class="stats-cards">
+        <div class="card">
+            <h3>Requêtes aujourd'hui</h3>
+            <div class="value">{{ stats.daily_requests }}</div>
+        </div>
+        <div class="card">
+            <h3>Coût total</h3>
+            <div class="value">{{ stats.total_cost }}€</div>
+        </div>
+        <!-- ... autres stats ... -->
+    </div>
+
+    <div class="providers-status">
+        {% for provider in providers %}
+        <div class="provider-card">
+            <h4>{{ provider.name }}</h4>
+            <div class="status {{ provider.status }}">
+                {{ provider.status|title }}
+            </div>
+            <div class="details">
+                <p>Quota: {{ provider.quota_used }}/{{ provider.quota_total }}</p>
+                <p>Latence: {{ provider.latency }}ms</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
