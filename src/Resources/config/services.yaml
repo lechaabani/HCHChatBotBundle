@@ -1,0 +1,44 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    HCH\ChatBotBundle\:
+        resource: '../../*'
+        exclude:
+            - '../../DependencyInjection/'
+            - '../../Entity/'
+            - '../../Resources/'
+            - '../../Tests/'
+
+    # Services publics
+    hch_chatbot.service:
+        class: HCH\ChatBotBundle\Service\ChatBotService
+        public: true
+        arguments:
+            $defaultProvider: '%hch_chatbot.default_provider%'
+
+    hch_chatbot.fallback_manager:
+        class: HCH\ChatBotBundle\Service\FallbackManager
+        arguments:
+            $fallbackChain: '%hch_chatbot.fallback_chain%'
+
+    hch_chatbot.quota_manager:
+        class: HCH\ChatBotBundle\Service\QuotaManager
+        arguments:
+            $resetPeriod: '%hch_chatbot.quota_manager.reset_period%'
+
+    # Providers
+    hch_chatbot.provider.openai:
+        class: HCH\ChatBotBundle\Provider\OpenAIProvider
+        tags: ['hch_chatbot.provider']
+
+    # Autres services...
+    hch_chatbot.llm_provider_factory:
+        class: HCH\ChatBotBundle\Factory\LLMProviderFactory
+        calls:
+            - [registerProvider, ['openai', 'HCH\ChatBotBundle\Provider\OpenAIProvider']]
+            - [registerProvider, ['claude', 'HCH\ChatBotBundle\Provider\ClaudeProvider']]
+            - [registerProvider, ['llama', 'HCH\ChatBotBundle\Provider\LlamaProvider']]
+            - [registerProvider, ['mistral', 'HCH\ChatBotBundle\Provider\MistralProvider']]
