@@ -1,0 +1,16 @@
+hch_chatbot:
+    llm_provider:
+        default: 'openai'
+        openai:
+            api_key: '%env(OPENAI_API_KEY)%'
+            model: 'gpt-3.5-turbo'
+    security:
+        rate_limit:
+            enabled: true
+            max_requests: 100
+            interval: 3600
+    cache:
+        enabled: true
+        ttl: 3600
+    websocket:
+        enabled: false 

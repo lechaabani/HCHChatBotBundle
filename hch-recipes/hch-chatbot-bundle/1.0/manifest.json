@@ -1,0 +1,16 @@
+{
+    "bundles": {
+        "HCH\\ChatBotBundle\\HCHChatBotBundle": ["all"]
+    },
+    "copy-from-recipe": {
+        "config/": "%CONFIG_DIR%/",
+        "templates/": "%TEMPLATES_DIR%/"
+    },
+    "env": {
+        "OPENAI_API_KEY": "change_me"
+    },
+    "gitignore": [
+        ".env.local",
+        "public/bundles/hchchatbot/"
+    ]
+} 
