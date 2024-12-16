@@ -1,0 +1,88 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    HCH\ChatBotBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    # Services principaux
+    HCH\ChatBotBundle\Service\ChatBotService:
+        arguments:
+            $providerFactory: '@HCH\ChatBotBundle\Factory\LLMProviderFactory'
+            $fallbackManager: '@HCH\ChatBotBundle\Service\FallbackManager'
+            $quotaManager: '@HCH\ChatBotBundle\Service\QuotaManager'
+            $defaultProvider: '%hch_chatbot.default_provider%'
+
+    HCH\ChatBotBundle\Service\QuotaManager:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+            $cache: '@cache.app'
+            $resetPeriod: '%hch_chatbot.quota_manager.reset_period%'
+
+    HCH\ChatBotBundle\Service\MonitoringService:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+            $logger: '@logger'
+            $environment: '%kernel.environment%'
+            $config: '%hch_chatbot.providers%'
+
+    HCH\ChatBotBundle\Factory\LLMProviderFactory:
+        arguments:
+            $httpClient: '@http_client'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+        calls:
+            - [registerProvider, ['openai', 'HCH\ChatBotBundle\Provider\OpenAIProvider']]
+            - [registerProvider, ['palm', 'HCH\ChatBotBundle\Provider\PaLMProvider']]
+            - [registerProvider, ['claude', 'HCH\ChatBotBundle\Provider\ClaudeProvider']]
+
+    HCH\ChatBotBundle\Service\DefaultPromptFormatter: ~
+
+    HCH\ChatBotBundle\Service\FallbackManager:
+        arguments:
+            $fallbackChain: '%hch_chatbot.fallback_chain%'
+
+    # Providers
+    HCH\ChatBotBundle\Provider\OpenAIProvider:
+        shared: false
+        arguments:
+            $config: '%hch_chatbot.providers.openai%'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+            $httpClient: '@http_client'
+
+    HCH\ChatBotBundle\Provider\PaLMProvider:
+        shared: false
+        arguments:
+            $config: '%hch_chatbot.providers.palm%'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+            $httpClient: '@http_client'
+
+    HCH\ChatBotBundle\Provider\ClaudeProvider:
+        shared: false
+        arguments:
+            $config: '%hch_chatbot.providers.claude%'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+            $httpClient: '@http_client'
+
+    # Services additionnels
+    HCH\ChatBotBundle\Service\ChatBotLogger:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+            $logger: '@logger'
+
+    HCH\ChatBotBundle\Service\CacheService:
+        arguments:
+            $cache: '@cache.app'
+            $defaultTtl: '%hch_chatbot.cache.default_ttl%'
+
+    HCH\ChatBotBundle\Service\AnalyticsService:
+        arguments:
+            $connection: '@doctrine.dbal.default_connection'
+            $monitoringService: '@HCH\ChatBotBundle\Service\MonitoringService'
+
+    HCH\ChatBotBundle\Service\ChatSessionService:
+        arguments:
+            $requestStack: '@request_stack'
+            $cache: '@cache.app'
