@@ -1,0 +1,13 @@
+services:
+    App\ChatBotBundle\Service\OpenAIService:
+        arguments:
+            $apiKey: '%env(OPENAI_API_KEY)%'
+
+    App\ChatBotBundle\Service\TranslationService:
+        arguments:
+            $googleApiKey: '%env(GOOGLE_TRANSLATE_API_KEY)%'
+
+ 
+
+    parameters:
+        chatbot.version: '%env(CHATBOT_VERSION)%'

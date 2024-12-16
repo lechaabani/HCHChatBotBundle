@@ -1,0 +1,3 @@
+hch_chatbot:
+    resource: .
+    type: hch_chatbot 
