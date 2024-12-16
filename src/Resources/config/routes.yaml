@@ -1,0 +1,14 @@
+hch_chatbot_send:
+    path: /chat/send
+    controller: HCH\ChatBotBundle\Controller\ChatBotController::send
+    methods: [POST]
+
+hch_chatbot_history:
+    path: /chat/history
+    controller: HCH\ChatBotBundle\Controller\ChatBotController::history
+    methods: [GET]
+
+hch_chatbot_admin:
+    path: /admin/HCHChatBotBundle
+    controller: HCH\ChatBotBundle\Controller\Admin\DashboardController::index
+    methods: [GET] 

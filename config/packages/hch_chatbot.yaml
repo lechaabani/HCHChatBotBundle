@@ -1,0 +1,81 @@
+hch_chatbot:
+    websocket:
+        enabled: true
+        port: 8080
+    
+    admin:
+        enabled: true
+        dashboard: true
+        
+    security:
+        rate_limit:
+            enabled: true
+            limit: 100
+            period: 3600
+            
+    cache:
+        enabled: true
+        ttl: 3600
+        provider: 'redis'
+        
+    queue:
+        enabled: true
+        transport: 'redis'
+        
+    analytics:
+        enabled: true
+        tracking: true
+        
+    plugins:
+        enabled: true
+        auto_discovery: true
+        
+    notifications:
+        enabled: true
+        channels: ['email', 'slack']
+        
+    api:
+        enabled: true
+        version: 'v1'
+        documentation: true 
+    llm_provider:
+        default: 'openai'
+        openai:
+            api_key: '%env(OPENAI_API_KEY)%'
+    plans:
+        free:
+            messages_per_day: 50
+            max_tokens: 500
+        premium:
+            messages_per_day: 1000
+            max_tokens: 2000
+    support:
+        email: chaabani.hammadi@gmail.com
+        github: https://github.com/lechaabani/hch-chatbot-bundle
+        author: Hamadi CHAABANI
+    providers:
+        openai:
+            api_key: '%env(OPENAI_API_KEY)%'
+            model: 'gpt-3.5-turbo'
+            limits:
+                daily_requests: 1000
+                tokens_per_request: 4096
+            fallback: 'claude'
+            
+        claude:
+            api_key: '%env(CLAUDE_API_KEY)%'
+            model: 'claude-2'
+            limits:
+                daily_requests: 500
+                
+        mistral:
+            api_key: '%env(MISTRAL_API_KEY)%'
+            limits:
+                daily_requests: 200
+
+    default_provider: 'openai'
+    fallback_chain: ['openai', 'claude', 'mistral']
+    
+    quota_manager:
+        storage: 'redis'
+        reset_period: 'daily'
