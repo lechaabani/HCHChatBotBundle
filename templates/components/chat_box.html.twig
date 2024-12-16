@@ -1,0 +1,20 @@
+<div class="chat-box" 
+     data-controller="chat-box"
+     data-chat-box-websocket-url-value="{{ path('hch_chatbot_ws') }}">
+    
+    <div class="chat-messages" data-chat-box-target="messages">
+        {% for message in messages %}
+            {% include '@HCHChatBot/components/message.html.twig' with {message: message} %}
+        {% endfor %}
+    </div>
+
+    <div class="chat-input">
+        <form data-action="submit->chat-box#sendMessage">
+            <input type="text" 
+                   data-chat-box-target="input"
+                   placeholder="Tapez votre message..."
+                   required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+</div> 
