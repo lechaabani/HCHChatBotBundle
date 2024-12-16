@@ -1,0 +1,42 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    HCH\ChatBotBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    HCH\ChatBotBundle\Service\ChatBotService:
+        arguments:
+            $providerFactory: '@HCH\ChatBotBundle\Factory\LLMProviderFactory'
+            $fallbackManager: '@HCH\ChatBotBundle\Service\FallbackManager'
+            $quotaManager: '@HCH\ChatBotBundle\Service\QuotaManager'
+            $defaultProvider: '%hch_chatbot.default_provider%'
+
+    HCH\ChatBotBundle\Factory\LLMProviderFactory:
+        arguments:
+            $httpClient: '@http_client'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+
+    HCH\ChatBotBundle\Service\FallbackManager:
+        arguments:
+            $fallbackChain: '%hch_chatbot.fallback_chain%'
+
+    HCH\ChatBotBundle\Service\QuotaManager:
+        arguments:
+            $resetPeriod: '%hch_chatbot.quota_manager.reset_period%'
+
+    # Providers
+    HCH\ChatBotBundle\Provider\OpenAIProvider:
+        arguments:
+            $config: '%hch_chatbot.providers.openai%'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+            $httpClient: '@http_client'
+
+    HCH\ChatBotBundle\Provider\PaLMProvider:
+        arguments:
+            $config: '%hch_chatbot.providers.palm%'
+            $promptFormatter: '@HCH\ChatBotBundle\Service\DefaultPromptFormatter'
+            $httpClient: '@http_client'
