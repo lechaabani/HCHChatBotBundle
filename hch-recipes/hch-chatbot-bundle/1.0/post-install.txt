@@ -1,0 +1,15 @@
+<bg=blue;fg=white>                              </>
+<bg=blue;fg=white> HCH ChatBot Bundle installed! </>
+<bg=blue;fg=white>                              </>
+
+  * The bundle is now installed and configured
+  * Configure your OpenAI API key in <fg=yellow>.env</>:
+    <fg=yellow>OPENAI_API_KEY=your-api-key</>
+
+  * Add the chatbot widget to your template:
+    {{ render_chatbot_widget() }}
+
+  * Access the admin interface at:
+    /admin/chatbot
+
+Documentation: https://github.com/lechaabani/hch-chatbot-bundle 
