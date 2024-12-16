@@ -1,0 +1,5 @@
+# Routes du bundle
+hch_chatbot_chat:
+    path: /hch_chatbot/chat
+    controller: HCH\ChatBotBundle\Controller\BundleChatController::chat
+    methods: [POST] 

@@ -1,0 +1,30 @@
+{% block chatbot_messages_container %}
+<div class="messages-container" data-conversation-id="{{ conversation_id }}">
+    {% for message in messages %}
+        <div class="message {{ message.type }}" data-message-id="{{ message.id }}">
+            {% if message.type == 'user' %}
+                <div class="user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            {% else %}
+                <div class="bot-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+            {% endif %}
+            
+            <div class="message-content">
+                {{ message.content|raw }}
+                <span class="message-time">{{ message.created_at|date('H:i') }}</span>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% if is_typing %}
+    <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+{% endif %}
+{% endblock %} 
