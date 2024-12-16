@@ -1,0 +1,23 @@
+{% block chatbot_widget %}
+<div class="hch-chatbot-widget {{ theme }}">
+    {% block chatbot_header %}
+        <div class="hch-chatbot-header">
+            <h3>{{ headerText|default('Assistant') }}</h3>
+            <button class="close-btn">×</button>
+        </div>
+    {% endblock %}
+
+    {% block chatbot_messages %}
+        <div class="hch-chatbot-messages">
+            {% include '@HCHChatBot/messages.html.twig' %}
+        </div>
+    {% endblock %}
+
+    {% block chatbot_input %}
+        <div class="hch-chatbot-input">
+            <textarea placeholder="Votre message..."></textarea>
+            <button type="submit">Envoyer</button>
+        </div>
+    {% endblock %}
+</div>
+{% endblock %} 

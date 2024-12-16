@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}HCH ChatBot Admin{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('bundles/hchchatbot/css/admin.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% endblock %}
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>ChatBot Admin</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="{{ path('hch_chatbot_admin_dashboard') }}"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="{{ path('hch_chatbot_admin_providers') }}"><i class="fas fa-plug"></i> Providers</a></li>
+                <li><a href="{{ path('hch_chatbot_admin_logs') }}"><i class="fas fa-list"></i> Logs</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    {% block javascripts %}
+        <script src="{{ asset('bundles/hchchatbot/js/admin.js') }}"></script>
+    {% endblock %}
+</body>
+</html> 

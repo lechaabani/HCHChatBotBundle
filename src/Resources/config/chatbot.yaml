@@ -1,0 +1,24 @@
+chatbot:
+    llm_provider:
+        default: 'openai'  # Peut être 'openai', 'huggingface', etc.
+        providers:
+            openai:
+                api_url: 'https://api.openai.com/v1'
+                endpoints:
+                    chat: '/v1/chat/completions'
+                    embeddings: '/v1/embeddings'
+                model: 'gpt-3.5-turbo'
+                temperature: 0.7
+            huggingface:
+                api_url: 'https://api-inference.huggingface.co/models'
+                model: 'gpt2'  # modèle par défaut
+    translation:
+        default: 'google'
+        providers:
+            google:
+                api_url: 'https://translation.googleapis.com/language/translate/v2'
+            deepl:
+                api_url: 'https://api-free.deepl.com/v2'
+    history:
+        max_messages: 10
+        storage: 'session'  # Peut être 'session', 'database', 'redis' 
