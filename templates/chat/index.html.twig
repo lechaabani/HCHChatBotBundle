@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="chat-container">
+        <div id="chat-messages"></div>
+        <form id="chat-form">
+            <input type="text" id="message" name="message" required>
+            <button type="submit">Envoyer</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('chat-form');
+        const messages = document.getElementById('chat-messages');
+        let conversationId = null;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const message = document.getElementById('message').value;
+            
+            // Afficher le message de l'utilisateur
+            messages.innerHTML += `<div class="user-message">${message}</div>`;
+            
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        message: message,
+                        conversation_id: conversationId
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.error) {
+                    messages.innerHTML += `<div class="error-message">${data.error}</div>`;
+                } else {
+                    messages.innerHTML += `<div class="bot-message">${data.response}</div>`;
+                    // Sauvegarder l'ID de conversation pour la suite
+                    conversationId = data.conversation_id;
+                }
+            } catch (error) {
+                messages.innerHTML += `<div class="error-message">Une erreur est survenue</div>`;
+            }
+
+            // Vider le champ message
+            document.getElementById('message').value = '';
+        });
+    </script>
+
+    <style>
+        .chat-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        #chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #eee;
+        }
+
+        .user-message, .bot-message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            margin-left: 20%;
+        }
+
+        .bot-message {
+            background: #f5f5f5;
+            margin-right: 20%;
+        }
+
+        .error-message {
+            background: #ffebee;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        #chat-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        #message {
+            flex: 1;
+            padding: 8px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background: #2196f3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1976d2;
+        }
+    </style>
+{% endblock %} 

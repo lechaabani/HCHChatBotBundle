@@ -1,0 +1,23 @@
+hch_chatbot:
+    providers:
+        openai:
+            api_key: '%env(OPENAI_API_KEY)%'
+            model: 'gpt-3.5-turbo'
+    default_provider: 'openai'
+    fallback_chain: ['openai']
+    quota_manager:
+        reset_period: 'daily'
+
+    interface:
+        enabled: true
+        theme: 'default'
+        position: 'bottom-right'
+        templates:
+            widget: '@HCHChatBot/widget.html.twig'
+            messages: '@HCHChatBot/messages.html.twig'
+    
+    admin:
+        enabled: true
+        dashboard: true
+    cache:
+        default_ttl: 3600
