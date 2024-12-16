@@ -1,0 +1,3 @@
+hch_chatbot:
+    resource: '@HCHChatBotBundle/config/routes.yaml'
+    prefix: /admin/chatbot 

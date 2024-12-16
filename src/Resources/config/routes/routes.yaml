@@ -1,0 +1,6 @@
+# Route principale pour le chat
+controllers:
+    resource:
+        path: ../../../Controller/
+        namespace: HCH\ChatBotBundle\Controller
+    type: attribute 
